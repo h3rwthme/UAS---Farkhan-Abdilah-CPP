@@ -20,7 +20,7 @@ struct Riwayat {
     string namaFileBaru;
     int ukuranFile;
     string namaFolder;
-    Riwayat* next;
+    Riwayat* prev;
 };
 
 // Tree folder memakai konsep anak dan saudara.
@@ -58,7 +58,7 @@ string rapikanTeks(string teks) {
     if (awal > akhir) {
         return "";
     }
-
+    
     return teks.substr(awal, akhir - awal + 1);
 }
 
@@ -127,7 +127,7 @@ void pushRiwayat(string aksi, int idFile, string namaLama, string namaBaru,
     baru->namaFileBaru = namaBaru;
     baru->ukuranFile = ukuranFile;
     baru->namaFolder = namaFolder;
-    baru->next = puncakRiwayat;
+    baru->prev = puncakRiwayat;
     puncakRiwayat = baru;
 }
 
@@ -138,7 +138,7 @@ bool riwayatKosong() {
 Riwayat popRiwayat() {
     Riwayat data = *puncakRiwayat;
     Riwayat* hapus = puncakRiwayat;
-    puncakRiwayat = puncakRiwayat->next;
+    puncakRiwayat = puncakRiwayat->prev;
     delete hapus;
     return data;
 }
@@ -309,7 +309,7 @@ void cariFileDiTree(Folder* node, string namaFile, bool& ketemu) {
     File* file = cariFileBerdasarkanNama(node->daftarFile, namaFile);
     if (file != NULL) {
         ketemu = true;
-        cout << "File ditemukan di folder " << node->namaFolder
+        cout << "\nFile ditemukan di folder " << node->namaFolder
              << " | ID: " << file->idFile
              << " | Ukuran: " << file->ukuranFile << " KB" << endl;
     }
@@ -353,7 +353,7 @@ void fiturTambahFile() {
     tambahFileKeList(folder->daftarFile, idOtomatis, namaFile, ukuranFile);
     pushRiwayat("TAMBAH", idOtomatis, namaFile, "", ukuranFile, namaFolder);
 
-    cout << "File berhasil ditambah dengan ID " << idOtomatis << "." << endl;
+    cout << "\nFile berhasil ditambah dengan ID " << idOtomatis << "." << endl;
     idOtomatis++;
 }
 
@@ -495,15 +495,14 @@ void buatDataFolderAwal() {
 
 void tampilMenu() {
     cout << "\n[=== SISTEM VERSION CONTROL SEDERHANA ===]" << endl;
-    cout << "Folder yang tersedia: UAS, Program, Dokumen, Revisi, Percobaan" << endl;
-    cout << "1. Tambah file" << endl;
+    cout << "\nFolder yang tersedia: UAS, Program, Dokumen, Revisi, Percobaan" << endl;
+    cout << "\n1. Tambah file" << endl;
     cout << "2. Hapus file" << endl;
     cout << "3. Rename file" << endl;
     cout << "4. Undo aktivitas terakhir" << endl;
     cout << "5. Tampilkan struktur folder" << endl;
     cout << "6. Cari file berdasarkan nama" << endl;
-    cout << "0. Keluar" << endl;
-    cout << "[========================================]" << endl;
+    cout << "0. Keluar\n" << endl;
 }
 
 int main() {
