@@ -111,7 +111,7 @@ struct Riwayat {
     string namaFileBaru;
     int ukuranFile;
     string namaFolder;
-    Riwayat* next;
+    Riwayat* prev;
 };
 ```
 
@@ -123,7 +123,7 @@ Artinya:
 - `namaFileBaru` menyimpan nama file setelah rename.
 - `ukuranFile` menyimpan ukuran file.
 - `namaFolder` menyimpan folder tempat file berada.
-- `next` menunjuk ke riwayat sebelumnya.
+- `prev` menunjuk ke riwayat sebelumnya.
 
 Contoh stack:
 
